@@ -1,7 +1,22 @@
+import { Switch, Route, Redirect } from "wouter"
+import LoginPage from "../auth/login/page"
+import HomePage from "../calendar/page"
+
 export default function AppRouter () {
+  const authStatus = 'authenticated'
+
   return (
-    <div>
-      <h1>App Router</h1>
-    </div>
+    <Switch>
+      {
+        authStatus === 'not-authenticated'
+        ? <Route path="/login" component={LoginPage} />
+        : <Route path="/" component={HomePage} />
+      }
+      {
+        authStatus === 'not-authenticated'
+        ? <Redirect to="/login" />
+        : <Redirect to="/" />
+      }
+    </Switch>
   )
 }
